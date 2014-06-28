@@ -7,8 +7,8 @@ var chalk = require('chalk');
 
 var FamousAngularGenerator = yeoman.generators.Base.extend({
   init: function () {
+    this.argument('appname', { type: String, required: false });
     this.pkg = require('../package.json');
-
     this.on('end', function () {
       if (!this.options['skip-install']) {
         this.installDependencies();
@@ -22,20 +22,19 @@ var FamousAngularGenerator = yeoman.generators.Base.extend({
     // Have Yeoman greet the user.
     this.log(yosay('Welcome to the marvelous Famous/Angular generator!'));
 
-    // var prompts = [{
-    //   type: 'confirm',
-    //   name: 'someOption',
-    //   message: 'Would you like to enable this option?',
-    //   default: true
-    // }];
+    var prompts = [
+      {
+        name: 'appName',
+        message: 'What\'s your project\'s name?',
+        default: this.appname,
+      }
+    ];
 
-    // this.prompt(prompts, function (props) {
-    //   this.someOption = props.someOption;
-    //
-    //   done();
-    // }.bind(this));
+    this.prompt(prompts, function (props) {
+      this.appName = props.appName;
 
-    done();
+      done();
+    }.bind(this));
   },
 
   app: function () {
@@ -52,6 +51,7 @@ var FamousAngularGenerator = yeoman.generators.Base.extend({
     this.directory('app/styles');
 
     this.directory('gulp');
+    
     this.directory('test');
 
     this.copy('_package.json', 'package.json');
