@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('<%= _.slugify(appname) %>')
+angular.module('<%= _.slugify(appname) %>App')
   .controller('MainCtrl', function ($scope, $famous) {
     var Transitionable = $famous['famous/transitions/Transitionable'];
     var Timer = $famous['famous/utilities/Timer'];
