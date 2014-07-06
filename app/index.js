@@ -24,15 +24,14 @@ var FamousAngularGenerator = yeoman.generators.Base.extend({
 
     var prompts = [
       {
-        name: 'appName',
+        name: 'appname',
         message: 'What\'s your project\'s name?',
         default: this.appname,
       }
     ];
 
     this.prompt(prompts, function (props) {
-      this.appName = props.appName;
-
+      this.appname = props.appname;
       done();
     }.bind(this));
   },
@@ -51,7 +50,7 @@ var FamousAngularGenerator = yeoman.generators.Base.extend({
     this.directory('app/styles');
 
     this.directory('gulp');
-    
+
     this.directory('test');
 
     this.copy('_package.json', 'package.json');
