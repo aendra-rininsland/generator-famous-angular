@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 
 var $ = require('gulp-load-plugins')();
+var mainBowerFiles = require('main-bower-files');
 
 gulp.task('styles', function () {
     // return gulp.src('app/styles/main.scss')
@@ -60,7 +61,7 @@ gulp.task('html', ['styles', 'scripts', 'haml', 'jade', 'partials'], function ()
         .pipe($.useref.assets())
         .pipe($.rev())
         .pipe(jsFilter)
-        .pipe($.ngmin())
+        .pipe($.ngAnnotate())
         .pipe($.uglify())
         .pipe(jsFilter.restore())
         .pipe(cssFilter)
@@ -85,7 +86,7 @@ gulp.task('images', function () {
 });
 
 gulp.task('fonts', function () {
-    return $.bowerFiles()
+    return gulp.src(mainBowerFiles())
         .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
         .pipe($.flatten())
         .pipe(gulp.dest('dist/fonts'))
@@ -93,7 +94,7 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('clean', function () {
-    return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
+    return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.rimraf());
 });
 
 gulp.task('build', ['haml', 'jade', 'html', 'partials', 'images', 'fonts']);
